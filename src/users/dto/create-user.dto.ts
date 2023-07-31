@@ -1,4 +1,9 @@
-import { IsString, IsEmail, IsStrongPassword, Contains } from 'class-validator';
+import { IsString, IsEmail, IsStrongPassword, IsEnum } from 'class-validator';
+
+enum Role {
+  'ADMIN',
+  'USER',
+}
 
 export class CreateUserDto {
   @IsString()
@@ -10,6 +15,8 @@ export class CreateUserDto {
   @IsStrongPassword()
   password: string;
 
-  @Contains('ADMIN' || 'USERS')
+  @IsEnum(Role, {
+    message: 'role must be either "ADMIN" OR "USER"',
+  })
   role: string;
 }
